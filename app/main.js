@@ -70,7 +70,7 @@ document.getElementById("url-input-section").addEventListener("click", (event) =
       .then(res => res.json())
       .then(json => displayURLs(json));
   }
-})
+});
 
 const folderCheck = (folderName) => {
   if (folderList.length !== 0) {
@@ -81,7 +81,7 @@ const folderCheck = (folderName) => {
     }
   }
   return false;
-}
+};
 
 const selectedFolderCheck = () => {
   for(let i=0; folderList.length>i; i++){
@@ -94,21 +94,21 @@ const selectedFolderCheck = () => {
       folderClass.remove("selected");
     }
   }
-}
+};
 
 const getURLs = (folderName) => {
   fetch(`http://localhost:3000/folders/${folderName}`)
     .then(res => res.json())
     .then(json => displayURLs(json));
-}
+};
 
 const displayURLs = (data) => {
-  let urls = [];
-  for(key in data.urls){
-    urls.push(`<div class="url">${data.urls[key]}</div>`)
-  }
+  console.log(data);
+  const urls = data.urls.map(urlObj => {
+    return `<div class="url">${urlObj.short_url}</div>`;
+  });
   document.getElementById("urls").innerHTML = urls.join("");
-}
+};
 
 const displayFolders = (data) => {
   const displayFolderNames = data.folders.map(folder => {

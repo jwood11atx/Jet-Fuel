@@ -8,24 +8,24 @@ app.use(express.static(__dirname + "/app"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.locals.folder = [];
+app.locals.folders = [];
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "app", "index.html"));
 });
 
 app.post("/folders", (req, res) => {
-  app.locals.folder.push({name: req.body.folderName, urls:{}});
-  res.json({folders: app.locals.folder});
+  app.locals.folders.push({name: req.body.name, urls:{}});
+  res.json({folders: app.locals.folders});
 });
 
 app.get("/folders", (req, res) => {
-  res.json({folders: app.locals.folder});
+  res.json({folders: app.locals.folders});
 });
 
 app.get("/folders/:id", (req, res) => {
   const name = req.params.id
-  const folder = app.locals.folder.find(folder => folder.name === name)
+  const folder = app.locals.folders.find(folder => folder.name === name)
   res.json(folder);
 })
 

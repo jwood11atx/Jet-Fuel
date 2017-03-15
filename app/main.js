@@ -22,20 +22,27 @@ document.getElementById("folder-section").addEventListener("click", (event) => {
   const folderListHTML = event.target.parentNode.children;
   if (event.target.id !== "folder-section") {
     for(let i=0; folderListHTML.length>i; i++){
-      if(folderListHTML[i].innerHTML === event.target.innerHTML){
-        folderListHTML[i].classList.add("selected");
+      const folder = folderListHTML[i];
+      const folderName = folder.innerHTML;
+      if(folderName === event.target.innerHTML){
+        folder.classList.add("selected");
+        getURLs(folderName)
       } else {
-        folderListHTML[i].classList.remove("selected")
+        folder.classList.remove("selected")
       }
     }
   }
 });
 
+const getURLs = (folderName) => {
+  fetch(`http://localhost:3000/folders/${folderName}`)
+    .then(res => res.json())
+    .then(json =>  console.log(json));
+}
+
 const displayFolders = (data) => {
   const displayFolderNames = data.folders.map(folder => {
-    for(key in folder){
-      return `<div class="folder" >${key}</div>`;
-    };
+    return `<div class="folder" >${folder.name}</div>`;
   });
   document.getElementById("folder-section").innerHTML = displayFolderNames.join("");
 };

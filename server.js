@@ -15,13 +15,19 @@ app.get("/", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
-  app.locals.folder.push({[req.body.folderName]: {}});
+  app.locals.folder.push({name: req.body.folderName, urls:{}});
   res.json({folders: app.locals.folder});
 });
 
 app.get("/folders", (req, res) => {
   res.json({folders: app.locals.folder});
 });
+
+app.get("/folders/:id", (req, res) => {
+  const name = req.params.id
+  const folder = app.locals.folder.find(folder => folder.name === name)
+  res.json(folder);
+})
 
 app.set("port", process.env.PORT || 3000);
 

@@ -40,17 +40,37 @@ document.getElementById("folder-section").addEventListener("click", (event) => {
         getURLs(folderName);
         selectedFolderCheck();
 
-        document.getElementById("url-input").innerHTML = `
-          <h2>${folderName}</h2>
+        document.getElementById("url-input-section").innerHTML = `
+          <h2 id="folder-name">${folderName}</h2>
           Enter URL to shorten: <input type="text"
                                        id="url-input"
                                        name="url-input"
                                        placeholder="enter url">
+          <button id="url-submit">submit</button>
+
           `;
       }
     }
   }
 });
+
+document.getElementById("url-input-section").addEventListener("click", (event) => {
+  if (event.target.id === "url-submit") {
+    const url = document.getElementById("url-input").value;
+    const name = document.getElementById("folder-name").innerHTML;
+
+    fetch(`http://localhost:3000/folders/${name}`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url})
+    })
+      .then(res => res.json())
+      .then(json => displayURLs(json));
+  }
+})
 
 const folderCheck = (folderName) => {
   if (folderList.length !== 0) {
@@ -79,7 +99,15 @@ const selectedFolderCheck = () => {
 const getURLs = (folderName) => {
   fetch(`http://localhost:3000/folders/${folderName}`)
     .then(res => res.json())
-    .then(json =>  console.log(json));
+    .then(json => displayURLs(json));
+}
+
+const displayURLs = (data) => {
+  let urls = [];
+  for(key in data.urls){
+    urls.push(`<div class="url">${data.urls[key]}</div>`)
+  }
+  document.getElementById("urls").innerHTML = urls.join("");
 }
 
 const displayFolders = (data) => {

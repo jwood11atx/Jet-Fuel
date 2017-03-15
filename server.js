@@ -14,6 +14,11 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "app", "index.html"))
 });
 
+app.post("/folders", (req, res) => {
+  app.locals.folder.push({[req.body.folderName]: {}})
+  res.json({folders: app.locals.folder})
+})
+
 app.set("port", process.env.PORT || 3000);
 
 app.listen(app.get("port"), () => {

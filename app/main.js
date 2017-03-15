@@ -1,7 +1,9 @@
 window.onload = () => {
   fetch("http://localhost:3000/folders")
   .then(res => res.json())
-  .then(json => displayFolders(json));
+  .then(json => {
+    if (json.folders.length !== 0) displayFolders(json);
+  });
 };
 
 document.getElementById("folder-submit").addEventListener("click", () => {
@@ -42,7 +44,7 @@ const getURLs = (folderName) => {
 
 const displayFolders = (data) => {
   const displayFolderNames = data.folders.map(folder => {
-    return `<div class="folder" >${folder.name}</div>`;
+    return `<div class="folder">${folder.name}</div>`;
   });
   document.getElementById("folder-section").innerHTML = displayFolderNames.join("");
 };

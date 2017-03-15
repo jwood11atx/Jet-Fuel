@@ -1,14 +1,7 @@
 window.onload = () => {
   fetch("http://localhost:3000/folders")
   .then(res => res.json())
-  .then(json => {
-    const displayFolderNames = json.folders.map(folder => {
-      for(key in folder){
-        return `<div class="folder">${key}</div>`;
-      }
-    });
-    document.getElementById("folder-section").innerHTML = displayFolderNames.join("");
-  });
+  .then(json => displayFolders(json));
 };
 
 document.getElementById("folder-submit").addEventListener("click", () => {
@@ -22,23 +15,27 @@ document.getElementById("folder-submit").addEventListener("click", () => {
     body: JSON.stringify({folderName})
   })
     .then(res => res.json())
-    .then(json => {
-      const displayFolderNames = json.folders.map(folder => {
-        for(key in folder){
-          return `<div class="folder" >${key}</div>`;
-        };
-      });
-      document.getElementById("folder-section").innerHTML = displayFolderNames.join("");
-    });
+    .then(json => displayFolders(json));
 });
 
 document.getElementById("folder-section").addEventListener("click", (event) => {
   const folderListHTML = event.target.parentNode.children;
-  for(let i=0; folderListHTML.length>i; i++){
-    if(folderListHTML[i].innerHTML === event.target.innerHTML){
-      folderListHTML[i].classList.add("selected");
-    } else {
-      folderListHTML[i].classList.remove("selected")
+  if (event.target.id !== "folder-section") {
+    for(let i=0; folderListHTML.length>i; i++){
+      if(folderListHTML[i].innerHTML === event.target.innerHTML){
+        folderListHTML[i].classList.add("selected");
+      } else {
+        folderListHTML[i].classList.remove("selected")
+      }
     }
   }
-})
+});
+
+const displayFolders = (data) => {
+  const displayFolderNames = data.folders.map(folder => {
+    for(key in folder){
+      return `<div class="folder" >${key}</div>`;
+    };
+  });
+  document.getElementById("folder-section").innerHTML = displayFolderNames.join("");
+};

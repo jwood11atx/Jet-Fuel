@@ -24,8 +24,16 @@ app.get("/folders", (req, res) => {
 });
 
 app.get("/folders/:id", (req, res) => {
-  const name = req.params.id
-  const folder = app.locals.folders.find(folder => folder.name === name)
+  const name = req.params.id;
+  const folder = app.locals.folders.find(folder => folder.name === name);
+  res.json(folder);
+})
+
+app.post("/folders/:id", (req, res) => {
+  const name = req.params.id;
+  const folder = app.locals.folders.find(folder => folder.name === name);
+  const url = req.body.url;
+  folder.urls[url] = Date.now();
   res.json(folder);
 })
 

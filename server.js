@@ -19,6 +19,10 @@ app.post("/folders", (req, res) => {
   res.json({folders: app.locals.folder})
 })
 
+app.get("/folders", (req, res) => {
+  res.json({folders: app.locals.folder})
+})
+
 app.set("port", process.env.PORT || 3000);
 
 app.listen(app.get("port"), () => {

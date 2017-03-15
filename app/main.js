@@ -4,7 +4,7 @@ window.onload = () => {
   .then(json => {
     let displayFolderNames = json.folders.map(folder => {
       for(key in folder){
-        return `<article>${key}</article>`;
+        return `<div>${key}</div>`;
       }
     });
     document.getElementById("right-section").innerHTML = displayFolderNames.join("");
@@ -25,7 +25,7 @@ document.getElementById("folder-submit").addEventListener("click", () => {
     .then(json => {
       let displayFolderNames = json.folders.map(folder => {
         for(key in folder){
-          return `<article>${key}</article>`;
+          return `<div>${key}</div>`;
         }
       });
       document.getElementById("right-section").innerHTML = displayFolderNames.join("");

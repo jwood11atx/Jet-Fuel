@@ -23,6 +23,7 @@ header {
 }
 
 #folder-section {
+  display: inline-block;
   margin: 5px;
 }
 

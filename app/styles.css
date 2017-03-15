@@ -1,0 +1,23 @@
+header {
+  font-size: 54px;
+  text-align: center;
+  padding: 15px;
+}
+
+#section-container {
+  display: flex;
+}
+
+#left-section {
+  flex: 1;
+  background-color: lightgrey;
+  width: 48vw;
+  height: 88vh;
+}
+
+#right-section {
+  flex: 1;
+  background-color: lightblue;
+  width: 48vw;
+  height: 88vh;
+}

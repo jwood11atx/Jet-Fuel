@@ -33,6 +33,11 @@ header {
   font-weight: bold;
 }
 
+.folder:hover {
+  cursor: pointer;
+  color: blue;
+}
+
 .selected {
   background-color: lightblue;
 }

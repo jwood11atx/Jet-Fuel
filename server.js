@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
-  app.locals.folders.push({name: req.body.name, urls:{}});
+  app.locals.folders.push({name: req.body.name, urls:[]});
   res.json({folders: app.locals.folders});
 });
 
@@ -33,7 +33,7 @@ app.post("/folders/:id", (req, res) => {
   const name = req.params.id;
   const folder = app.locals.folders.find(folder => folder.name === name);
   const url = req.body.url;
-  folder.urls[url] = Date.now();
+  folder.urls.push({url, short_url: Date.now()});
   res.json(folder);
 })
 

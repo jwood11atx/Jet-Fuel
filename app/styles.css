@@ -27,6 +27,10 @@ header {
   margin: 5px;
 }
 
+#folder-error {
+  color: red;
+}
+
 .folder {
   margin: 5px;
   font-size: 16px;

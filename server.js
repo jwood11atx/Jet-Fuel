@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
-  app.locals.folders.push({name: req.body.name, urls:[]});
+  app.locals.folders.push({id: Date.now(), name: req.body.name, urls:[]});
   res.json({folders: app.locals.folders});
 });
 
@@ -24,18 +24,23 @@ app.get("/folders", (req, res) => {
 });
 
 app.get("/folders/:id", (req, res) => {
-  const name = req.params.id;
-  const folder = app.locals.folders.find(folder => folder.name === name);
+  const {id} = req.params;
+  const folder = findFolder(id);
   res.json(folder);
 })
 
 app.post("/folders/:id", (req, res) => {
-  const name = req.params.id;
-  const folder = app.locals.folders.find(folder => folder.name === name);
-  const url = req.body.url;
+  const {id} = req.params;
+  const {url} = req.body;
+  const folder = findFolder(id);
   folder.urls.push({url, short_url: Date.now()});
   res.json(folder);
 })
+
+const findFolder = (id) => {
+  const folder = app.locals.folders.find(folder => folder.id == id);
+  return folder;
+}
 
 app.set("port", process.env.PORT || 3000);
 

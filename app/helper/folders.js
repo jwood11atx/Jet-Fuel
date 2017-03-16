@@ -4,9 +4,8 @@ const selectFolder = (event) => {
 };
 
 const matchFolder = (event) => {
-  const folderListHTML = event.target.parentNode.children;
-  for(let i=0; folderListHTML.length>i; i++){
-    const folderName = folderListHTML[i].innerHTML;
+  for(let i=0; $folderList.length>i; i++){
+    const folderName = $folderList[i].innerHTML;
     if(folderName === event.target.innerHTML){
       selected = folderName;
       getURLs(event.target.id);
@@ -68,4 +67,8 @@ const reselectFolder = () => {
 const displayErrMsg = (message) => {
   const errMsg = document.getElementById("folder-error");
   errMsg.innerHTML = message;
+};
+
+if(typeof module !== 'undefined') {
+  module.exports = {selectFolder, matchFolder, createFolder, folderCheck, displayFolders, reselectFolder, displayErrMsg};
 };

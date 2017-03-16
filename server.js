@@ -21,8 +21,6 @@ app.post("/folders", (req, res) => {
     id: md5(name),
     name,
     urls:[],
-    views: 0,
-    timestamp: Date.now()
   });
   res.json({folders: app.locals.folders});
 });
@@ -35,21 +33,21 @@ app.get("/folders/:id", (req, res) => {
   const {id} = req.params;
   const folder = findFolder(id);
   res.json(folder);
-})
+});
 
 app.post("/folders/:id", (req, res) => {
   const {id} = req.params;
   const {url} = req.body;
   const folder = findFolder(id);
   const short_url = md5(url).split("").splice(0,8).join("");
-  folder.urls.push({url, short_url});
+  folder.urls.push({url, short_url, views: 0, timestamp: Date.now()});
   res.json(folder);
-})
+});
 
 const findFolder = (id) => {
   const folder = app.locals.folders.find(folder => folder.id == id);
   return folder;
-}
+};
 
 app.set("port", process.env.PORT || 3000);
 

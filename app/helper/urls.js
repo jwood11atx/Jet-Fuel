@@ -9,7 +9,14 @@ const getURLs = (folderID) => {
 const displayURLs = (data) => {
   console.log(data);
   const urls = data.urls.map(urlObj => {
-    return `<div class="url">${urlObj.short_url}</div>`;
+    const timestamp = new Date(urlObj.timestamp);
+    return (`
+      <div class="url">
+        ${urlObj.short_url}
+        <span>${urlObj.views}</span>
+        <span>${timestamp.getMonth()}/${timestamp.getFullYear().toString().slice(1,3)}</span>
+      </div>
+      `);
   });
   document.getElementById("urls").innerHTML = urls.join("");
 };

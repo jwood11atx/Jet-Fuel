@@ -7,18 +7,17 @@ const getURLs = (folderID) => {
 };
 
 const displayURLs = (data) => {
-  console.log(data);
   const urls = data.urls.map(urlObj => {
     const timestamp = new Date(urlObj.timestamp);
     return (`
-      <div class="url">
-        ${urlObj.short_url}
-        <span>${urlObj.views}</span>
-        <span>${timestamp.getMonth()}/${timestamp.getFullYear().toString().slice(1,3)}</span>
+      <div class="url-container">
+        <span class="url" >${urlObj.short_url}</span>
+        <span class="views" >${urlObj.views}</span>
+        <span class="timestamp" >${timestamp.getMonth()}/${timestamp.getFullYear().toString().slice(1,3)}</span>
       </div>
       `);
   });
-  document.getElementById("urls").innerHTML = urls.join("");
+  $urls.innerHTML = urls.join("");
 };
 
 const displayURLinput = (folderName) => {

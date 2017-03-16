@@ -2,6 +2,7 @@ const $folderList = document.getElementsByClassName("folder");
 const $folderSection = document.getElementById("folder-section");
 const $folderSubmit = document.getElementById("folder-submit");
 const $urlInputSection = document.getElementById("url-input-section");
+const $urls = document.getElementById("urls");
 let selected = "";
 
 window.onload = () => {
@@ -38,6 +39,23 @@ $urlInputSection.addEventListener("click", (event) => {
   }
 });
 
+$urls.addEventListener("click", (event) => {
+  if(event.target.classList.value === "url"){
+    const $views = event.target.closest(".url-container").querySelector(".views");
+    const viewCount = Number($views.innerHTML) + 1
+    $views.innerHTML = viewCount;
+    const url = event.target.innerHTML;
+    fetch(`http://localhost:3000/folders/${selected.id}`, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({viewCount, url})
+    })
+  }
+})
+;
 if(typeof module !== 'undefined') {
   module.exports = {$folderList,
                     $folderSection,

@@ -17,7 +17,7 @@ const matchFolder = (event) => {
 
 const createFolder = () => {
   const name = document.getElementById("folder-input").value;
-  if(!folderCheck(name)){
+  if(!folderCheck(name, $folderList)){
     fetch("http://localhost:3000/folders", {
       method: "POST",
       headers: {
@@ -31,16 +31,16 @@ const createFolder = () => {
   }
 };
 
-const folderCheck = (folderName) => {
-  if ($folderList.length !== 0) {
-    for(let i=0; $folderList.length>i; i++){
-      if ($folderList[i].innerHTML === folderName) {
-        displayErrMsg("folder name already in use")
+const folderCheck = (folderName, folderList) => {
+  if (folderList.length !== 0) {
+    for(let i=0; folderList.length>i; i++){
+      if (folderList[i].innerHTML === folderName) {
+        displayErrMsg("folder name already in use", $errMsg)
         return true;
       }
     }
   }
-  displayErrMsg("");
+  displayErrMsg("", $errMsg);
   return false;
 };
 
@@ -65,8 +65,7 @@ const reselectFolder = () => {
   }
 };
 
-const displayErrMsg = (message) => {
-  const errMsg = document.getElementById("folder-error");
+const displayErrMsg = (message, errMsg) => {
   errMsg.innerHTML = message;
 };
 

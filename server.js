@@ -16,9 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
+  const {name} = req.body;
   app.locals.folders.push({
-    id: md5(""),
-    name: req.body.name,
+    id: md5(name),
+    name,
     urls:[],
     views: 0,
     timestamp: Date.now()

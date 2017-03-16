@@ -2,6 +2,7 @@ const getURLs = (folderID) => {
   fetch(`http://localhost:3000/folders/${folderID}`)
     .then(res => res.json())
     .then(json => {
+      urlList = json.urls;
       displayURLs(json)
     });
 };
@@ -11,9 +12,12 @@ const displayURLs = (data) => {
     const timestamp = new Date(urlObj.timestamp);
     return (`
       <div class="url-container">
-        <span class="url" >${urlObj.short_url}</span>
-        <span class="views" >${urlObj.views}</span>
-        <span class="timestamp" >${timestamp.getMonth()}/${timestamp.getFullYear().toString().slice(1,3)}</span>
+        ${urlObj.websiteName}:
+        <span class="url">${urlObj.short_url}</span>
+        views: <span class="views">${urlObj.views}</span>
+        date: <span class="timestamp">
+                ${ timestamp.getMonth() + 1 }/${ timestamp.getDate() }/${ timestamp.getFullYear().toString().slice(2,4) }
+              </span>
       </div>
       `);
   });
@@ -23,7 +27,12 @@ const displayURLs = (data) => {
 const displayURLinput = (folderName) => {
   $urlInputSection.innerHTML = `
     <h2 id="folder">${folderName}</h2>
-    Enter URL to shorten: <input type="text"
+    Website name: <input type="text"
+                                 id="website-name-input"
+                                 name="website-name-input"
+                                 placeholder="name of website">
+    <br/>
+    URL to shorten: <input type="text"
                                  id="url-input"
                                  name="url-input"
                                  placeholder="enter url">
@@ -33,7 +42,5 @@ const displayURLinput = (folderName) => {
       <button id="sort-views">views</button>
       <button id="sort-date">date</button>
     </div>
-
-
     `;
 }

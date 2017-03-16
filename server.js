@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "app", "index.html"));
 });
 
+app.get("/folders", (req, res) => {
+  res.json({folders: app.locals.folders});
+});
+
 app.post("/folders", (req, res) => {
   const {name} = req.body;
   app.locals.folders.push({
@@ -22,10 +26,6 @@ app.post("/folders", (req, res) => {
     name,
     urls:[],
   });
-  res.json({folders: app.locals.folders});
-});
-
-app.get("/folders", (req, res) => {
   res.json({folders: app.locals.folders});
 });
 
@@ -37,10 +37,14 @@ app.get("/folders/:id", (req, res) => {
 
 app.post("/folders/:id", (req, res) => {
   const {id} = req.params;
-  const {url} = req.body;
+  const {url, websiteName} = req.body;
   const folder = findFolder(id);
   const short_url = md5(url).split("").splice(0,8).join("");
-  folder.urls.push({url, short_url, views: 0, timestamp: Date.now()});
+  folder.urls.push({url,
+                    short_url,
+                    websiteName,
+                    views: 0,
+                    timestamp: Date.now()});
   res.json(folder);
 });
 
@@ -54,6 +58,8 @@ app.patch("/folders/:id", (req, res) => {
     }
   })
 });
+
+// app.get("/:short_url")
 
 const findFolder = (id) => {
   const folder = app.locals.folders.find(folder => folder.id == id);

@@ -44,6 +44,17 @@ app.post("/folders/:id", (req, res) => {
   res.json(folder);
 });
 
+app.patch("/folders/:id", (req, res) => {
+  const {id} = req.params;
+  const {viewCount, url} = req.body;
+  const folder = findFolder(id);
+  folder.urls.forEach(obj => {
+    if(obj.short_url === url){
+      obj.views = viewCount;
+    }
+  })
+});
+
 const findFolder = (id) => {
   const folder = app.locals.folders.find(folder => folder.id == id);
   return folder;

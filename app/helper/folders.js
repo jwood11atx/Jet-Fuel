@@ -1,13 +1,14 @@
 const selectFolder = (event) => {
-  if (event.target.id !== "folder-section")
+  if (event.target.classList.value !== "folder-section"){
     matchFolder(event);
+  }
 };
 
 const matchFolder = (event) => {
   for(let i=0; $folderList.length>i; i++){
     const folderName = $folderList[i].innerHTML;
     if(folderName === event.target.innerHTML){
-      selected = folderName;
+      selected = {folderName, id: event.target.id};
       getURLs(event.target.id);
       displayURLinput(folderName);
     }
@@ -56,7 +57,7 @@ const reselectFolder = () => {
     const folder = $folderList[i];
     const folderClass = folder.classList;
 
-    if(folder.innerHTML === selected){
+    if(folder.innerHTML === selected.folderName){
       folderClass.add("selected");
     } else {
       folderClass.remove("selected");

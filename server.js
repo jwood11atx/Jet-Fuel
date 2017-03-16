@@ -59,7 +59,16 @@ app.patch("/folders/:id", (req, res) => {
   })
 });
 
-// app.get("/:short_url")
+app.get("/:short_url", (req, res) => {
+  const {short_url} = req.params;
+  app.locals.folders.forEach(folder => {
+    folder.urls.forEach(url => {
+      if(url.short_url === short_url) {
+        res.redirect(url.url)
+      };
+    })
+  })
+})
 
 const findFolder = (id) => {
   const folder = app.locals.folders.find(folder => folder.id == id);

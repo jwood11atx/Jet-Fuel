@@ -29,6 +29,12 @@ const displayURLinput = (folderName) => {
                                  name="url-input"
                                  placeholder="enter url">
     <button id="url-submit">submit</button>
+    <div>
+      Sort by:
+      <button id="sort-views">views</button>
+      <button id="sort-date">date</button>
+    </div>
+
 
     `;
 }

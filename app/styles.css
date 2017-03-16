@@ -45,3 +45,13 @@ header {
 .selected {
   background-color: lightblue;
 }
+
+.url {
+  color: blue;
+  text-decoration: underline;
+}
+
+.url:hover {
+  color: purple;
+  cursor: pointer;
+}

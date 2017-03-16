@@ -2,7 +2,6 @@ const $folderList = document.getElementsByClassName("folder");
 const $folderSection = document.getElementById("folder-section");
 const $folderSubmit = document.getElementById("folder-submit");
 const $urlInputSection = document.getElementById("url-input-section");
-// const selectFolder = require("./helper/folders.js");
 let selected = "";
 
 window.onload = () => {
@@ -38,3 +37,11 @@ $urlInputSection.addEventListener("click", (event) => {
       .then(json => displayURLs(json));
   }
 });
+
+if(typeof module !== 'undefined') {
+  module.exports = {$folderList,
+                    $folderSection,
+                    $folderSubmit,
+                    $urlInputSection
+  };
+};

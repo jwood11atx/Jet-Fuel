@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const md5 = require("js-md5");
 
 const app = express();
 
@@ -15,7 +16,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
-  app.locals.folders.push({id: Date.now(), name: req.body.name, urls:[]});
+  app.locals.folders.push({
+    id: md5(""),
+    name: req.body.name,
+    urls:[],
+    views: 0,
+    timestamp: Date.now()
+  });
   res.json({folders: app.locals.folders});
 });
 
@@ -33,7 +40,8 @@ app.post("/folders/:id", (req, res) => {
   const {id} = req.params;
   const {url} = req.body;
   const folder = findFolder(id);
-  folder.urls.push({url, short_url: Date.now()});
+  const short_url = md5(url).split("").splice(0,8).join("");
+  folder.urls.push({url, short_url});
   res.json(folder);
 })
 

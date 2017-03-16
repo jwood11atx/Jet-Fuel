@@ -3,6 +3,7 @@ const $folderSection = document.getElementById("folder-section");
 const $folderSubmit = document.getElementById("folder-submit");
 const $urlInputSection = document.getElementById("url-input-section");
 const $urls = document.getElementById("urls");
+const $errMsg = document.getElementById("folder-error");
 let selected = {};
 let urlList = [];
 

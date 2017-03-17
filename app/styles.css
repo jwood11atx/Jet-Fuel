@@ -46,7 +46,7 @@ header {
   background-color: lightblue;
 }
 
-.url {
+/*.url {
   color: blue;
   text-decoration: underline;
 }
@@ -54,4 +54,4 @@ header {
 .url:hover {
   color: purple;
   cursor: pointer;
-}
+}*/

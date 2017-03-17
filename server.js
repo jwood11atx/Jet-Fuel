@@ -44,31 +44,31 @@ app.get("/folders/:id", (req, res) => {
     .catch(err => console.log("something went wrong!"));
 });
 
-app.post("/folders/:id", (req, res) => {
-  const {id} = req.params;
-  const {url, websiteName} = req.body;
+app.post("/folders/:folder_id", (req, res) => {
+  const {folder_id} = req.params;
+  const {url, website_name} = req.body;
   const short_url = md5(url).split("").splice(0,8).join("");
-  const urlObj = {
-    url,
-    short_url,
-    website_name: websiteName,
-    views: 0,
-    folder_id: id,
-    created_at: new Date()
-  };
+  const urlObj = { url,
+                   short_url,
+                   website_name,
+                   views: 0,
+                   folder_id,
+                   created_at: new Date()
+                 };
+                 
   database("urls").insert(urlObj)
     .then(() => {
-      database("urls").where("folder_id", id).select()
+      database("urls").where("folder_id", folder_id).select()
         .then(urls => res.status(200).json(urls))
         .catch(err => console.log("something went wrong!"));
     })
 });
 
-app.patch("/folders/:id", (req, res) => {
-  const {id} = req.params;
-  const {viewCount, shortUrl} = req.body;
-  database("urls").where("short_url", shortUrl)
-    .update({views: viewCount})
+app.patch("/folders/:folder_id", (req, res) => {
+  const {folder_id} = req.params;
+  const {views, id} = req.body;
+  database("urls").where("id", id).select()
+    .update({views})
     .finally()
 });
 

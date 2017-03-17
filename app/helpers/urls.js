@@ -13,7 +13,7 @@ const displayURLs = (data) => {
     return (`
       <div class="url-container">
         ${urlObj.website_name}:
-        <span class="url">${urlObj.short_url}</span>
+        <a id="${urlObj.id}" class="url"href="${urlObj.url}" target="_blank">${urlObj.short_url}</a>
         views: <span class="views">${urlObj.views}</span>
         date: <span class="timestamp">
                 ${ timestamp.getMonth() + 1 }/${ timestamp.getDate() }/${ timestamp.getFullYear().toString().slice(2,4) }

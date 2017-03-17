@@ -9,9 +9,7 @@ let urlList = [];
 let viewSort = "up";
 
 window.onload = () => {
-  fetch("http://localhost:3000/folders")
-  .then(res => res.json())
-  .then(json => {
+  getFolders().then(json => {
     if (json.length !== 0) displayFolders(json);
   });
 };
@@ -31,43 +29,24 @@ $urlInputSection.addEventListener("click", (event) => {
     const url = document.getElementById("url-input").value;
     const id = document.querySelector(".selected").id;
     const websiteName = document.getElementById("website-name-input").value;
-    fetch(`http://localhost:3000/folders/${id}`, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({url, websiteName})
-    })
-      .then(res => res.json())
-      .then(json => {
-        urlList = json;
-        displayURLs(json);
-      });
+    postURL(id, url, websiteName).then(json => {
+      urlList = json;
+      displayURLs(json);
+    });
   }
 });
-
 
 //REFACTOR THIS!!//------------------------------------
 $urls.addEventListener("click", (event) => {
   if(event.target.classList.value === "url"){
-    const $views = event.target.closest(".url-container").querySelector(".views");
+    const $views = event.target
+                        .closest(".url-container")
+                        .querySelector(".views");
     const viewCount = Number($views.innerHTML) + 1;
+    const urlID = event.target.id;
+
     $views.innerHTML = viewCount;
-    const shortUrl = event.target.innerHTML;
-    fetch(`http://localhost:3000/folders/${selected.id}`, {
-      method: "PATCH",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({viewCount, shortUrl})
-    })
-    urlList.forEach(urlObj => {
-      if(shortUrl === urlObj.short_url){
-        window.open(`${urlObj.url}`, "_blank");
-      }
-    });
+    patchURL(viewCount, urlID);
   }
 });
 

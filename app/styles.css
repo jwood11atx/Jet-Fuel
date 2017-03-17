@@ -31,6 +31,29 @@ header {
   color: red;
 }
 
+#folder-title {
+  font-size: 30px;
+  padding: 5px;
+}
+
+#url-input-section {
+  text-align: center;
+}
+
+#url-input, #website-name-input {
+  display: block;
+  margin: 5px auto;
+}
+
+#urls {
+  display: block;
+  text-align: center;
+}
+
+.url-container {
+  margin: 5px;
+}
+
 .folder {
   margin: 5px;
   font-size: 16px;
@@ -45,13 +68,3 @@ header {
 .selected {
   background-color: lightblue;
 }
-
-/*.url {
-  color: blue;
-  text-decoration: underline;
-}
-
-.url:hover {
-  color: purple;
-  cursor: pointer;
-}*/

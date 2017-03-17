@@ -20,7 +20,13 @@ const folderCheck = (folderName, folderList) => {
 
 const selectFolder = (event) => {
   if (event.target.classList.value !== "folder-section"){
-    matchFolder(event);
+
+    getFolder(event.target.id).then(json => {
+      selected = {folderName: json[0].folder_name,
+                  id: json[0].id};
+      getURLs().then(json => displayURLs(json));
+      displayURLinput();
+    });
   }
 };
 
@@ -28,7 +34,8 @@ const matchFolder = (event) => {
   for(let i=0; $folderList.length>i; i++){
     const folderName = $folderList[i].innerHTML;
     if(folderName === event.target.innerHTML){
-      selected = {folderName, id: event.target.id};
+      selected = {folderName,
+                  id: event.target.id};
       getURLs().then(json => displayURLs(json));
       displayURLinput(folderName);
     }
@@ -57,5 +64,5 @@ const reselectFolder = () => {
 };
 
 if(typeof module !== 'undefined') {
-  module.exports = {selectFolder, matchFolder, createFolder, folderCheck, displayFolders, reselectFolder, displayErrMsg};
+  module.exports = {selectFolder, matchFolder, createFolder, folderCheck, displayFolders, reselectFolder};
 };

@@ -43,4 +43,14 @@ const displayURLinput = (folderName) => {
       <button id="sort-date">date</button>
     </div>
     `;
-}
+};
+
+const sortUrls = (urlsArr, type) => {
+  if(viewSort === "up"){
+    viewSort = "down";
+    return urlsArr.sort((a,b) => b[type]-a[type]);
+  } else {
+    viewSort = "up";
+    return urlsArr.sort((a,b) => a[type]-b[type]);
+  }
+};

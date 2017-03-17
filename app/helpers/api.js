@@ -1,3 +1,7 @@
+const getFolder = (folder_id) => {
+  return fetch(`http://localhost:3000/folders/${folder_id}`).then(res => res.json());
+};
+
 const getFolders = () => {
   return fetch("http://localhost:3000/folders").then(res => res.json());
 };
@@ -14,7 +18,7 @@ const postFolder = (folder_name) => {
 };
 
 const getURLs = () => {
-  return fetch(`http://localhost:3000/folders/${selected.id}`)
+  return fetch(`http://localhost:3000/folders/${selected.id}/urls`)
     .then(res => res.json());
 };
 

@@ -15,9 +15,9 @@ const displayURLs = (data) => {
   $urls.innerHTML = urls.join("");
 };
 
-const displayURLinput = (folderName) => {
+const displayURLinput = () => {
   $urlInputSection.innerHTML = `
-    <h2 id="folder">${folderName}</h2>
+    <h2 id="folder-title">${selected.folderName}</h2>
     Website name: <input type="text"
                                  id="website-name-input"
                                  name="website-name-input"

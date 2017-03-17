@@ -39,6 +39,13 @@ app.post("/folders", (req, res) => {
 
 app.get("/folders/:id", (req, res) => {
   const {id} = req.params;
+  database("folders").where("id", id).select()
+    .then(folder => res.status(200).json(folder))
+    .catch(err => console.log("something went wrong!"));
+});
+
+app.get("/folders/:id/urls", (req, res) => {
+  const {id} = req.params;
   database("urls").where("folder_id", id).select()
     .then(urls => res.status(200).json(urls))
     .catch(err => console.log("something went wrong!"));

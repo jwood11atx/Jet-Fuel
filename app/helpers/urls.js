@@ -45,3 +45,7 @@ const sortUrls = (urlsArr, type) => {
     return urlsArr.sort((a,b) => a[type]-b[type]);
   }
 };
+
+if(typeof module !== 'undefined') {
+  module.exports = {displayURLs, displayURLinput, sortUrls};
+};

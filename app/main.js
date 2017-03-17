@@ -8,6 +8,7 @@ let selected = {};
 let urlList = [];
 let viewSort = "up";
 
+
 window.onload = () => {
   getFolders().then(json => {
     if (json.length !== 0) displayFolders(json);

@@ -21,22 +21,22 @@ app.get("/", (req, res) => {
 
 app.get("/folders", (req, res) => {
   database("folders").select()
-    .then((folders) => {
-      res.status(200).json(folders);
-    })
-    .catch((err) => {
-      console.log("something went wrong!");
-    })
+    .then((folders) => res.status(200).json(folders))
+    .catch((err) => console.log("something went wrong!"))
 });
 
 app.post("/folders", (req, res) => {
   const {name} = req.body;
-  app.locals.folders.push({
-    id: md5(name),
-    name,
-    urls:[],
-  });
-  res.json({folders: app.locals.folders});
+  const folder = {
+    folder_name: name,
+    created_at: new Date
+  }
+  database("folders").insert(folder)
+    .then(() => {
+      database("folders").select()
+        .then(folders => res.status(200).json(folders))
+        .catch(err => console.log("something went wrong!"));
+    })
 });
 
 app.get("/folders/:id", (req, res) => {
@@ -64,6 +64,7 @@ app.patch("/folders/:id", (req, res) => {
   const {viewCount, shortUrl} = req.body;
   database("urls").where("short_url", shortUrl)
     .update({views: viewCount})
+    .finally()
 });
 
 app.get("/:short_url", (req, res) => {

@@ -76,7 +76,7 @@ app.patch("/urls/:id", (req, res) => {
   const {key, value} = req.body;
   database("urls").where("id", id).select()
     .update({[key]: value})
-    .finally();
+    .finally(urls = res.status(200).json(urls));
 });
 
 app.get("/:short_url", (req, res) => {

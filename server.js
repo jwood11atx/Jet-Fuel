@@ -20,21 +20,21 @@ app.get("/", (req, res) => {
 app.get("/folders", (req, res) => {
   database("folders").select()
     .then((folders) => res.status(200).json(folders))
-    .catch((err) => console.log("something went wrong!"))
+    .catch((err) => console.log("something went wrong!"));
 });
 
 app.post("/folders", (req, res) => {
   const {name} = req.body;
   const folder = {
-    folder_name: name,
+    folder_name,
     created_at: new Date
-  }
+  };
   database("folders").insert(folder)
     .then(() => {
       database("folders").select()
         .then(folders => res.status(200).json(folders))
         .catch(err => console.log("something went wrong!"));
-    })
+    });
 });
 
 app.get("/folders/:id", (req, res) => {
@@ -44,32 +44,32 @@ app.get("/folders/:id", (req, res) => {
     .catch(err => console.log("something went wrong!"));
 });
 
-app.post("/folders/:id", (req, res) => {
-  const {id} = req.params;
-  const {url, websiteName} = req.body;
+app.post("/folders/:folder_id", (req, res) => {
+  const {folder_id} = req.params;
+  const {url, website_name} = req.body;
   const short_url = md5(url).split("").splice(0,8).join("");
-  const urlObj = {
-    url,
-    short_url,
-    website_name: websiteName,
-    views: 0,
-    folder_id: id,
-    created_at: new Date()
-  };
+  const urlObj = { url,
+                   short_url,
+                   website_name,
+                   views: 0,
+                   folder_id,
+                   created_at: new Date()
+                 };
+
   database("urls").insert(urlObj)
     .then(() => {
-      database("urls").where("folder_id", id).select()
+      database("urls").where("folder_id", folder_id).select()
         .then(urls => res.status(200).json(urls))
         .catch(err => console.log("something went wrong!"));
-    })
+    });
 });
 
-app.patch("/folders/:id", (req, res) => {
-  const {id} = req.params;
-  const {viewCount, shortUrl} = req.body;
-  database("urls").where("short_url", shortUrl)
-    .update({views: viewCount})
-    .finally()
+app.patch("/folders/:folder_id", (req, res) => {
+  const {folder_id} = req.params;
+  const {id, key, value} = req.body;
+  database("urls").where("id", id).select()
+    .update({[key]: value})
+    .finally();
 });
 
 app.get("/:short_url", (req, res) => {
@@ -77,7 +77,7 @@ app.get("/:short_url", (req, res) => {
   database("urls").where("short_url", short_url).select()
     .then(urlArr => res.status(200).redirect(urlArr[0].url))
     .catch(err => console.log("something went wrong!"));
-})
+});
 
 app.set("port", process.env.PORT || 3000);
 

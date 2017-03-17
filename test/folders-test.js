@@ -1,6 +1,6 @@
 const {expect} = require("chai");
 
-const {displayErrMsg} = require("../app/helper/folders.js");
+const {displayErrMsg} = require("../app/helpers/folders.js");
 
 describe("folders helper functions", () => {
   it("exists?", () => {

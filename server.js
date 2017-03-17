@@ -41,8 +41,9 @@ app.post("/folders", (req, res) => {
 
 app.get("/folders/:id", (req, res) => {
   const {id} = req.params;
-  const folder = findFolder(id);
-  res.json(folder);
+  database("urls").where("id", id).select()
+    .then(urls => res.status(200).json(urls))
+    .catch(err => console.log("something went wrong!"));
 });
 
 app.post("/folders/:id", (req, res) => {
@@ -60,13 +61,9 @@ app.post("/folders/:id", (req, res) => {
 
 app.patch("/folders/:id", (req, res) => {
   const {id} = req.params;
-  const {viewCount, url} = req.body;
-  const folder = findFolder(id);
-  folder.urls.forEach(obj => {
-    if(obj.short_url === url){
-      obj.views = viewCount;
-    }
-  })
+  const {viewCount, shortUrl} = req.body;
+  database("urls").where("short_url", shortUrl)
+    .update({views: viewCount})
 });
 
 app.get("/:short_url", (req, res) => {

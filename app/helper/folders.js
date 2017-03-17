@@ -45,7 +45,6 @@ const folderCheck = (folderName, folderList) => {
 };
 
 const displayFolders = (data) => {
-  console.log(data);
   const displayFolderNames = data.map(folder => {
     return `<div id=${folder.id} class="folder">${folder.folder_name}</div>`;
   });

@@ -2,17 +2,17 @@ const getURLs = (folderID) => {
   fetch(`http://localhost:3000/folders/${folderID}`)
     .then(res => res.json())
     .then(json => {
-      urlList = json.urls;
+      urlList = json;
       displayURLs(json)
     });
 };
 
 const displayURLs = (data) => {
-  const urls = data.urls.map(urlObj => {
-    const timestamp = new Date(urlObj.timestamp);
+  const urls = data.map(urlObj => {
+    const timestamp = new Date(urlObj.created_at);
     return (`
       <div class="url-container">
-        ${urlObj.websiteName}:
+        ${urlObj.website_name}:
         <span class="url">${urlObj.short_url}</span>
         views: <span class="views">${urlObj.views}</span>
         date: <span class="timestamp">

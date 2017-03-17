@@ -39,7 +39,7 @@ $urlInputSection.addEventListener("click", (event) => {
     })
       .then(res => res.json())
       .then(json => {
-        urlList = json.urls;
+        urlList = json;
         displayURLs(json);
       });
   }

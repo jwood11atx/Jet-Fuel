@@ -30,18 +30,6 @@ const selectFolder = (event) => {
   }
 };
 
-const matchFolder = (event) => {
-  for(let i=0; $folderList.length>i; i++){
-    const folderName = $folderList[i].innerHTML;
-    if(folderName === event.target.innerHTML){
-      selected = {folderName,
-                  id: event.target.id};
-      getURLs().then(json => displayURLs(json));
-      displayURLinput(folderName);
-    }
-  };
-};
-
 const displayFolders = (data) => {
   const displayFolderNames = data.map(folder => {
     return `<div id=${folder.id} class="folder">${folder.folder_name}</div>`;
@@ -64,5 +52,5 @@ const reselectFolder = () => {
 };
 
 if(typeof module !== 'undefined') {
-  module.exports = {selectFolder, matchFolder, createFolder, folderCheck, displayFolders, reselectFolder};
+  module.exports = {selectFolder, createFolder, folderCheck, displayFolders, reselectFolder};
 };

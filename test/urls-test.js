@@ -34,7 +34,7 @@ describe("helpers/urls.js", () => {
     it("should display html filled in with the folder name", () => {
       $urlInputSection = {innerHTML: ""};
       selected = {folderName: "shopping"};
-      const expected = `<h2id="folder-title">shopping</h2>Websitename:<inputtype="text"id="website-name-input"name="website-name-input"placeholder="nameofwebsite"><br/>URLtoshorten:<inputtype="text"id="url-input"name="url-input"placeholder="enterurl"><buttonid="url-submit">submit</button><div>Sortby:<buttonid="sort-views">views</button><buttonid="sort-date">date</button></div>`;
+      const expected = `<h2id="folder-title">shopping</h2><divid="url-input-fields">Websitename:<inputtype="text"id="website-name-input"name="website-name-input"placeholder="nameofwebsite">URLtoshorten:<inputtype="text"id="url-input"name="url-input"placeholder="enterurl"><buttonid="url-submit">submit</button><div>Sortby:<buttonid="sort-views">views</button><buttonid="sort-date">date</button></div></div>`;
 
       displayURLinput();
 

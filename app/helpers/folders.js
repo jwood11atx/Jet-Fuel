@@ -20,12 +20,12 @@ const folderCheck = (folderName, folderList) => {
 
 const selectFolder = (event) => {
   if (event.target.classList.value !== "folder-section"){
-
     getFolder(event.target.id).then(json => {
       selected = {folderName: json[0].folder_name,
                   id: json[0].id};
       getURLs().then(json => displayURLs(json));
       displayURLinput();
+      reselectFolder();
     });
   }
 };

@@ -23,7 +23,6 @@ $folderSubmit.addEventListener("click", () => {
 $folderSection.addEventListener("click", (event) => {
   viewSort = "up";
   selectFolder(event);
-  reselectFolder();
 });
 
 //add a url to folder

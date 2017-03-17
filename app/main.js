@@ -6,6 +6,7 @@ const $urls = document.getElementById("urls");
 const $errMsg = document.getElementById("folder-error");
 let selected = {};
 let urlList = [];
+let viewSort = "up";
 
 window.onload = () => {
   fetch("http://localhost:3000/folders")
@@ -20,6 +21,7 @@ $folderSubmit.addEventListener("click", () => {
 });
 
 $folderSection.addEventListener("click", (event) => {
+  viewSort = "up";
   selectFolder(event);
   reselectFolder();
 });
@@ -68,6 +70,24 @@ $urls.addEventListener("click", (event) => {
     });
   }
 });
+
+$urlInputSection.addEventListener("click", (event) => {
+  if(event.target.id === "sort-views"){
+    fetch(`http://localhost:3000/folders/${selected.id}`)
+      .then(res => res.json())
+      .then(json => {
+        if(viewSort === "up"){
+          viewSort = "down";
+          json.sort((a,b) => b.views-a.views);
+        } else {
+          viewSort = "up";
+          json.sort((a,b) => a.views-b.views);
+        }
+        urlList = json;
+        displayURLs(json);
+      })
+  }
+})
 
 if(typeof module !== 'undefined') {
   module.exports = {$folderList,

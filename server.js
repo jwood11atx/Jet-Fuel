@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 app.get("/folders", (req, res) => {
   database("folders").select()
     .then((folders) => res.status(200).json(folders))
-    .catch((err) => console.log("something went wrong!"));
+    .catch((err) => console.log("something went wrong with /folers!"));
 });
 
 app.post("/folders", (req, res) => {
@@ -33,7 +33,7 @@ app.post("/folders", (req, res) => {
     .then(() => {
       database("folders").select()
         .then(folders => res.status(200).json(folders))
-        .catch(err => console.log("something went wrong!"));
+        .catch(err => console.log("something went wrong with /folders!"));
     });
 });
 
@@ -41,14 +41,14 @@ app.get("/folders/:id", (req, res) => {
   const {id} = req.params;
   database("folders").where("id", id).select()
     .then(folder => res.status(200).json(folder))
-    .catch(err => console.log("something went wrong!"));
+    .catch(err => console.log("something went wrong with /folders/id!"));
 });
 
 app.get("/folders/:id/urls", (req, res) => {
   const {id} = req.params;
   database("urls").where("folder_id", id).select()
     .then(urls => res.status(200).json(urls))
-    .catch(err => console.log("something went wrong!"));
+    .catch(err => console.log("something went wrong with folders/id/urls!"));
 });
 
 app.post("/folders/:folder_id/urls", (req, res) => {
@@ -67,7 +67,7 @@ app.post("/folders/:folder_id/urls", (req, res) => {
     .then(() => {
       database("urls").where("folder_id", folder_id).select()
         .then(urls => res.status(200).json(urls))
-        .catch(err => console.log("something went wrong!"));
+        .catch(err => console.log("something went wrong! /folders/id/urls"));
     });
 });
 
@@ -76,14 +76,16 @@ app.patch("/urls/:id", (req, res) => {
   const {key, value} = req.body;
   database("urls").where("id", id).select()
     .update({[key]: value})
-    .finally(urls = res.status(200).json(urls));
+    .finally();
 });
 
 app.get("/:short_url", (req, res) => {
   const {short_url} = req.params;
-  database("urls").where("short_url", short_url).select()
+  if (short_url !== "favicon.ico") {
+    database("urls").where("short_url", short_url).select()
     .then(urlArr => res.status(200).redirect(urlArr[0].url))
-    .catch(err => console.log("something went wrong!"));
+    .catch(err => console.log("something went wrong! with /short"));
+  }
 });
 
 app.set("port", process.env.PORT || 3000);
@@ -92,7 +94,7 @@ app.listen(app.get("port"), () => {
   console.log(`server up, listening at port:3000`);
 });
 
-if (!module.parent) {
+if (!module) {
   app.listen(app.get('port'), () => {
     console.log(`${app.locals.title} is running on ${app.get('port')}.`);
   });

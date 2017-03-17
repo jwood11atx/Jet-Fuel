@@ -13,8 +13,6 @@ app.use(express.static(__dirname + "/app"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.locals.folders = [];
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "app", "index.html"));
 });
@@ -49,14 +47,20 @@ app.get("/folders/:id", (req, res) => {
 app.post("/folders/:id", (req, res) => {
   const {id} = req.params;
   const {url, websiteName} = req.body;
-  const folder = findFolder(id);
   const short_url = md5(url).split("").splice(0,8).join("");
-  folder.urls.push({url,
-                    short_url,
-                    websiteName,
-                    views: 0,
-                    timestamp: Date.now()});
-  res.json(folder);
+  const urlObj = {
+    url,
+    short_url,
+    website_name: websiteName,
+    views: 0,
+    folder_id: id
+  };
+  database("urls").insert(urlObj)
+    .then(() => {
+      database("urls").where("folder_id", id).select()
+        .then(urls => res.status(200).json(urls))
+        .catch(err => console.log("something went wrong!"));
+    })
 });
 
 app.patch("/folders/:id", (req, res) => {
@@ -69,19 +73,10 @@ app.patch("/folders/:id", (req, res) => {
 
 app.get("/:short_url", (req, res) => {
   const {short_url} = req.params;
-  app.locals.folders.forEach(folder => {
-    folder.urls.forEach(url => {
-      if(url.short_url === short_url) {
-        res.redirect(url.url)
-      };
-    })
-  })
+  database("urls").where("short_url", short_url).select()
+    .then(url => res.status(200).redirect(url))
+    .catch(err => console.log("something went wrong!"));
 })
-
-const findFolder = (id) => {
-  const folder = app.locals.folders.find(folder => folder.id == id);
-  return folder;
-};
 
 app.set("port", process.env.PORT || 3000);
 

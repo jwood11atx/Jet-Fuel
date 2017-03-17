@@ -29,7 +29,7 @@ $folderSection.addEventListener("click", (event) => {
 //add a url to folder
 $urlInputSection.addEventListener("click", (event) => {
   if(event.target.id === "url-submit"){
-    const url = document.getElementById("url-input").value;
+    const url = cleanUrl(document.getElementById("url-input").value);
     const id = document.querySelector(".selected").id;
     const websiteName = document.getElementById("website-name-input").value;
     postURL(id, url, websiteName).then(json => {

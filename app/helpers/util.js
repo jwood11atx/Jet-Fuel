@@ -4,3 +4,9 @@ const convertDate = (data) => {
     return urlObj;
   });
 };
+
+const cleanUrl = (url) => {
+  if(url.slice(0,7) !== "http://" || url.slice(0,8) !== "https://"){
+    return "http://" + url;
+  }
+};

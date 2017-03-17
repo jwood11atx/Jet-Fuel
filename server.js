@@ -24,7 +24,7 @@ app.get("/folders", (req, res) => {
 });
 
 app.post("/folders", (req, res) => {
-  const {name} = req.body;
+  const {folder_name} = req.body;
   const folder = {
     folder_name,
     created_at: new Date
@@ -44,7 +44,7 @@ app.get("/folders/:id", (req, res) => {
     .catch(err => console.log("something went wrong!"));
 });
 
-app.post("/folders/:folder_id", (req, res) => {
+app.post("/folders/:folder_id/urls", (req, res) => {
   const {folder_id} = req.params;
   const {url, website_name} = req.body;
   const short_url = md5(url).split("").splice(0,8).join("");
@@ -64,9 +64,9 @@ app.post("/folders/:folder_id", (req, res) => {
     });
 });
 
-app.patch("/folders/:folder_id", (req, res) => {
-  const {folder_id} = req.params;
-  const {id, key, value} = req.body;
+app.patch("/urls/:id", (req, res) => {
+  const {id} = req.params;
+  const {key, value} = req.body;
   database("urls").where("id", id).select()
     .update({[key]: value})
     .finally();

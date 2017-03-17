@@ -19,7 +19,7 @@ const getURLs = () => {
 };
 
 const postURL = (folder_id, url, website_name) => {
-  return fetch(`http://localhost:3000/folders/${folder_id}`, {
+  return fetch(`http://localhost:3000/folders/${folder_id}/urls`, {
           method: "POST",
           headers: {
             'Accept': 'application/json',
@@ -30,12 +30,12 @@ const postURL = (folder_id, url, website_name) => {
 };
 
 const patchURL = (id, key, value) => {
-  fetch(`http://localhost:3000/folders/${selected.id}`, {
+  fetch(`http://localhost:3000/urls/${id}`, {
     method: "PATCH",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({id, key, value})
+    body: JSON.stringify({key, value})
   });
 };

@@ -56,10 +56,6 @@ const reselectFolder = () => {
   };
 };
 
-const displayErrMsg = (message, errMsg) => {
-  errMsg.innerHTML = message;
-};
-
 if(typeof module !== 'undefined') {
   module.exports = {selectFolder, matchFolder, createFolder, folderCheck, displayFolders, reselectFolder, displayErrMsg};
 };

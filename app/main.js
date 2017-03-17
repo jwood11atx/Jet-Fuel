@@ -76,18 +76,28 @@ $urlInputSection.addEventListener("click", (event) => {
     fetch(`http://localhost:3000/folders/${selected.id}`)
       .then(res => res.json())
       .then(json => {
-        if(viewSort === "up"){
-          viewSort = "down";
-          json.sort((a,b) => b.views-a.views);
-        } else {
-          viewSort = "up";
-          json.sort((a,b) => a.views-b.views);
-        }
-        urlList = json;
+        const sortedUrls = sortUrls(json, "views")
         displayURLs(json);
       })
   }
-})
+});
+
+$urlInputSection.addEventListener("click", (event) => {
+  if(event.target.id === "sort-date"){
+    fetch(`http://localhost:3000/folders/${selected.id}`)
+      .then(res => res.json())
+      .then(json => {
+        json = json.map(urlObj => {
+          urlObj.created_at = new Date(urlObj.created_at).getTime();
+          return urlObj;
+        });
+        const sortedUrls = sortUrls(json, "created_at")
+        displayURLs(json);
+      })
+  }
+});
+
+
 
 if(typeof module !== 'undefined') {
   module.exports = {$folderList,

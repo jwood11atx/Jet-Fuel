@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-     "test": "node_modules/.bin/mocha ./test/**.js || true"
+    "test": "node_modules/.bin/mocha ./test/**.js || true"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,9 @@
   "homepage": "https://github.com/jwood11atx/Jet-Fuel#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "knex": "^0.12.8",
+    "pg": "^6.1.4"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

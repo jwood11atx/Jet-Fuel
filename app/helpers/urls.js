@@ -18,20 +18,21 @@ const displayURLs = (data) => {
 const displayURLinput = () => {
   $urlInputSection.innerHTML = `
     <h2 id="folder-title">${selected.folderName}</h2>
-    Website name: <input type="text"
-                                 id="website-name-input"
-                                 name="website-name-input"
-                                 placeholder="name of website">
-    <br/>
-    URL to shorten: <input type="text"
-                                 id="url-input"
-                                 name="url-input"
-                                 placeholder="enter url">
-    <button id="url-submit">submit</button>
-    <div>
-      Sort by:
-      <button id="sort-views">views</button>
-      <button id="sort-date">date</button>
+    <div id="url-input-fields">
+      Website name:
+        <input type="text" id="website-name-input"
+                           name="website-name-input"
+                           placeholder="name of website">
+      URL to shorten:
+        <input type="text" id="url-input"
+                           name="url-input"
+                           placeholder="enter url">
+          <button id="url-submit">submit</button>
+          <div>
+            Sort by:
+            <button id="sort-views">views</button>
+            <button id="sort-date">date</button>
+          </div>
     </div>
     `;
 };

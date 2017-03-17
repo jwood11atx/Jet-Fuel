@@ -39,7 +39,7 @@ app.post("/folders", (req, res) => {
 
 app.get("/folders/:id", (req, res) => {
   const {id} = req.params;
-  database("urls").where("id", id).select()
+  database("urls").where("folder_id", id).select()
     .then(urls => res.status(200).json(urls))
     .catch(err => console.log("something went wrong!"));
 });
@@ -53,7 +53,8 @@ app.post("/folders/:id", (req, res) => {
     short_url,
     website_name: websiteName,
     views: 0,
-    folder_id: id
+    folder_id: id,
+    created_at: new Date()
   };
   database("urls").insert(urlObj)
     .then(() => {
@@ -74,7 +75,7 @@ app.patch("/folders/:id", (req, res) => {
 app.get("/:short_url", (req, res) => {
   const {short_url} = req.params;
   database("urls").where("short_url", short_url).select()
-    .then(url => res.status(200).redirect(url))
+    .then(urlArr => res.status(200).redirect(urlArr[0].url))
     .catch(err => console.log("something went wrong!"));
 })
 

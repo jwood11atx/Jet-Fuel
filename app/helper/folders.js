@@ -45,8 +45,9 @@ const folderCheck = (folderName, folderList) => {
 };
 
 const displayFolders = (data) => {
-  const displayFolderNames = data.folders.map(folder => {
-    return `<div id=${folder.id} class="folder">${folder.name}</div>`;
+  console.log(data);
+  const displayFolderNames = data.map(folder => {
+    return `<div id=${folder.id} class="folder">${folder.folder_name}</div>`;
   });
   $folderSection.innerHTML = displayFolderNames.join("");
   reselectFolder();

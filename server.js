@@ -3,6 +3,10 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const md5 = require("js-md5");
 
+const environment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
+
 const app = express();
 
 app.use(express.static(__dirname + "/app"));
@@ -16,7 +20,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/folders", (req, res) => {
-  res.json({folders: app.locals.folders});
+  database("folders").select()
+    .then((folders) => {
+      res.status(200).json(folders);
+    })
+    .catch((err) => {
+      console.log("something went wrong!");
+    })
 });
 
 app.post("/folders", (req, res) => {

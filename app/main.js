@@ -11,7 +11,7 @@ window.onload = () => {
   fetch("http://localhost:3000/folders")
   .then(res => res.json())
   .then(json => {
-    if (json.folders.length !== 0) displayFolders(json);
+    if (json.length !== 0) displayFolders(json);
   });
 };
 
@@ -29,7 +29,6 @@ $urlInputSection.addEventListener("click", (event) => {
     const url = document.getElementById("url-input").value;
     const id = document.querySelector(".selected").id;
     const websiteName = document.getElementById("website-name-input").value;
-    console.log(websiteName);
     fetch(`http://localhost:3000/folders/${id}`, {
       method: "POST",
       headers: {
@@ -46,23 +45,24 @@ $urlInputSection.addEventListener("click", (event) => {
   }
 });
 
+
+//REFACTOR THIS!!//------------------------------------
 $urls.addEventListener("click", (event) => {
   if(event.target.classList.value === "url"){
     const $views = event.target.closest(".url-container").querySelector(".views");
-    const viewCount = Number($views.innerHTML) + 1
+    const viewCount = Number($views.innerHTML) + 1;
     $views.innerHTML = viewCount;
-    const url = event.target.innerHTML;
+    const shortUrl = event.target.innerHTML;
     fetch(`http://localhost:3000/folders/${selected.id}`, {
       method: "PATCH",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({viewCount, url})
+      body: JSON.stringify({viewCount, shortUrl})
     })
-    console.log(urlList);
     urlList.forEach(urlObj => {
-      if(url === urlObj.short_url){
+      if(shortUrl === urlObj.short_url){
         window.open(`${urlObj.url}`, "_blank");
       }
     });

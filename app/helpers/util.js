@@ -6,7 +6,17 @@ const convertDate = (data) => {
 };
 
 const cleanUrl = (url) => {
-  if(url.slice(0,7) !== "http://" || url.slice(0,8) !== "https://"){
+  if(url.slice(0,7) === "http://" || url.slice(0,8) === "https://"){
+    return url;
+  } else {
     return "http://" + url;
   }
+};
+
+const displayErrMsg = (message, errMsg) => {
+  errMsg.innerHTML = message;
+};
+
+if(typeof module !== 'undefined') {
+  module.exports = {convertDate, cleanUrl, displayErrMsg};
 };

@@ -20,21 +20,21 @@ app.get("/", (req, res) => {
 app.get("/folders", (req, res) => {
   database("folders").select()
     .then((folders) => res.status(200).json(folders))
-    .catch((err) => console.log("something went wrong!"))
+    .catch((err) => console.log("something went wrong!"));
 });
 
 app.post("/folders", (req, res) => {
   const {name} = req.body;
   const folder = {
-    folder_name: name,
+    folder_name,
     created_at: new Date
-  }
+  };
   database("folders").insert(folder)
     .then(() => {
       database("folders").select()
         .then(folders => res.status(200).json(folders))
         .catch(err => console.log("something went wrong!"));
-    })
+    });
 });
 
 app.get("/folders/:id", (req, res) => {
@@ -55,21 +55,21 @@ app.post("/folders/:folder_id", (req, res) => {
                    folder_id,
                    created_at: new Date()
                  };
-                 
+
   database("urls").insert(urlObj)
     .then(() => {
       database("urls").where("folder_id", folder_id).select()
         .then(urls => res.status(200).json(urls))
         .catch(err => console.log("something went wrong!"));
-    })
+    });
 });
 
 app.patch("/folders/:folder_id", (req, res) => {
   const {folder_id} = req.params;
-  const {views, id} = req.body;
+  const {id, key, value} = req.body;
   database("urls").where("id", id).select()
-    .update({views})
-    .finally()
+    .update({[key]: value})
+    .finally();
 });
 
 app.get("/:short_url", (req, res) => {
@@ -77,7 +77,7 @@ app.get("/:short_url", (req, res) => {
   database("urls").where("short_url", short_url).select()
     .then(urlArr => res.status(200).redirect(urlArr[0].url))
     .catch(err => console.log("something went wrong!"));
-})
+});
 
 app.set("port", process.env.PORT || 3000);
 

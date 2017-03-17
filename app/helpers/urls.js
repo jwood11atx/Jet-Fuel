@@ -1,12 +1,3 @@
-const getURLs = (folderID) => {
-  fetch(`http://localhost:3000/folders/${folderID}`)
-    .then(res => res.json())
-    .then(json => {
-      urlList = json;
-      displayURLs(json)
-    });
-};
-
 const displayURLs = (data) => {
   const urls = data.map(urlObj => {
     const timestamp = new Date(urlObj.created_at);

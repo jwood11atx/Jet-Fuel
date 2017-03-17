@@ -1,3 +1,23 @@
+const createFolder = () => {
+  const name = document.getElementById("folder-input").value;
+  if(!folderCheck(name, $folderList)){
+    postFolder(name).then(json => displayFolders(json));
+  }
+};
+
+const folderCheck = (folderName, folderList) => {
+  if (folderList.length !== 0) {
+    for(let i=0; folderList.length>i; i++){
+      if (folderList[i].innerHTML === folderName) {
+        displayErrMsg("folder name already in use", $errMsg)
+        return true;
+      }
+    };
+  }
+  displayErrMsg("", $errMsg);
+  return false;
+};
+
 const selectFolder = (event) => {
   if (event.target.classList.value !== "folder-section"){
     matchFolder(event);
@@ -9,39 +29,10 @@ const matchFolder = (event) => {
     const folderName = $folderList[i].innerHTML;
     if(folderName === event.target.innerHTML){
       selected = {folderName, id: event.target.id};
-      getURLs(event.target.id);
+      getURLs().then(json => displayURLs(json));
       displayURLinput(folderName);
     }
-  }
-}
-
-const createFolder = () => {
-  const name = document.getElementById("folder-input").value;
-  if(!folderCheck(name, $folderList)){
-    fetch("http://localhost:3000/folders", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({name})
-    })
-      .then(res => res.json())
-      .then(json => displayFolders(json));
-  }
-};
-
-const folderCheck = (folderName, folderList) => {
-  if (folderList.length !== 0) {
-    for(let i=0; folderList.length>i; i++){
-      if (folderList[i].innerHTML === folderName) {
-        displayErrMsg("folder name already in use", $errMsg)
-        return true;
-      }
-    }
-  }
-  displayErrMsg("", $errMsg);
-  return false;
+  };
 };
 
 const displayFolders = (data) => {
@@ -62,7 +53,7 @@ const reselectFolder = () => {
     } else {
       folderClass.remove("selected");
     }
-  }
+  };
 };
 
 const displayErrMsg = (message, errMsg) => {
